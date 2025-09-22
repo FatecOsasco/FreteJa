@@ -27,13 +27,14 @@ public class SecurityConfig {
     return cfg.getAuthenticationManager();
   }
 
-  @Bean
-  SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
+ @Bean
+SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
           .requestMatchers(
               "/",
               "/auth/**",
+              "/cep/**",         
               "/swagger-ui.html",
               "/swagger-ui/**",
               "/v3/api-docs",
@@ -46,7 +47,8 @@ public class SecurityConfig {
         .addFilterBefore(new JwtAuthFilter(jwt, users),
             org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
     return http.build();
-  }
+}
+
 
   // utilitário para converter perfis em authorities
   public static class SecurityUtils {
