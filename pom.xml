@@ -71,6 +71,12 @@
       <version>2.6.0</version>
     </dependency>
 
+    <!-- Thymeleaf -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency>
+
     <!-- Lombok (opcional) -->
     <dependency>
       <groupId>org.projectlombok</groupId>
