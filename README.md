@@ -8,7 +8,7 @@ Aplicação web desenvolvida para a disciplina **Desenvolvimento Web III**, com 
 - Giovanni Carneiro Nunes
 - Gustavo Henrique Barbosa Almeida
 - Igor Alves Baptistella
-- Michael Teixeira da Costa – Banco de Dados
+- Michael Teixeira da Costa
 
 ---
 
