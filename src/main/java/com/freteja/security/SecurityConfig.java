@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,28 +31,27 @@ public class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-          .requestMatchers(
-              "/",
-              "/auth/**",
-              "/swagger-ui.html",
-              "/swagger-ui/**",
-              "/v3/api-docs/**",
-              "/swagger-resources/**",
-              "/swagger-resources",
-              "/webjars/**"
-          ).permitAll()
-          .anyRequest().authenticated())
-        .addFilterBefore(new JwtAuthFilter(jwt, users), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
-        .httpBasic(Customizer.withDefaults());
+            .requestMatchers(
+                "/",                     // libera a home
+                "/auth/**",              // login/register
+                "/swagger-ui.html",      // Swagger UI
+                "/swagger-ui/**",        // recursos do Swagger UI
+                "/v3/api-docs/**",       // OpenAPI docs
+                "/swagger-resources/**", // recursos auxiliares Swagger
+                "/webjars/**"            // dependências estáticas
+            ).permitAll()
+            .anyRequest().authenticated())
+        .addFilterBefore(new JwtAuthFilter(jwt, users),
+            org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
-  // util
+  // utilitário para converter perfis em authorities
   public static class SecurityUtils {
     public static Set<SimpleGrantedAuthority> toAuthorities(Set<com.freteja.model.Perfil> perfis) {
-      return perfis.stream().map(p -> new SimpleGrantedAuthority("ROLE_" + p.name()))
+      return perfis.stream()
+          .map(p -> new SimpleGrantedAuthority("ROLE_" + p.name()))
           .collect(Collectors.toSet());
     }
   }
 }
-
