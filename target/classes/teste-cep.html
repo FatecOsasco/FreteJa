@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste CEP - Frete Já</title>
+</head>
+<body>
+  <h2>Consulta CEP</h2>
+
+  <form onsubmit="consultarCep(event)">
+    <label>CEP: <input type="text" id="cep" value="01001000"></label>
+    <button type="submit">Consultar</button>
+  </form>
+
+  <pre id="resultado"></pre>
+
+  <script>
+    async function consultarCep(event) {
+      event.preventDefault(); // evita recarregar a página
+
+      const cep = document.getElementById("cep").value;
+      const resultado = document.getElementById("resultado");
+
+      try {
+        const res = await fetch("http://localhost:8080/cep/" + cep);
+        if (!res.ok) {
+          resultado.textContent = "Erro: " + res.status;
+          return;
+        }
+        const data = await res.json();
+        resultado.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resultado.textContent = "Erro de conexão: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
+

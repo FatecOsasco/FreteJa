@@ -33,8 +33,9 @@ SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository u
         .authorizeHttpRequests(auth -> auth
           .requestMatchers(
               "/",
-              "/auth/**",
-              "/cep/**",         
+              "/auth/**",	      
+              "/cep/**", 
+      	      "/teste-cep",       
               "/swagger-ui.html",
               "/swagger-ui/**",
               "/v3/api-docs",
