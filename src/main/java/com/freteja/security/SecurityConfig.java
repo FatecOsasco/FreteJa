@@ -32,8 +32,14 @@ public class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/auth/**", "/swagger/**", "/api-docs/**").permitAll()
-            .anyRequest().authenticated())
+          .requestMatchers(
+              "/auth/**",
+              "/swagger-ui.html",
+              "/swagger-ui/**",
+              "/v3/api-docs/**",
+              "/api-docs/**"
+          ).permitAll()
+          .anyRequest().authenticated())
         .addFilterBefore(new JwtAuthFilter(jwt, users), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
         .httpBasic(Customizer.withDefaults());
     return http.build();
