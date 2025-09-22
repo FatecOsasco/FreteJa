@@ -1,0 +1,25 @@
+package com.freteja.model;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("propostas")
+public class Proposta {
+  @Id
+  private String id;
+
+  private String cotacaoId;
+  private String transportadoraUserId;
+
+  private BigDecimal valor;
+  private Integer prazoDias;
+  private String observacao;
+
+  private Instant createdAt = Instant.now();
+
+  // getters/setters ...
+}
+
