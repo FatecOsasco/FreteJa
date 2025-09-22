@@ -37,3 +37,23 @@ docker-compose up mongo
 mvn spring-boot:run
 
 A aplicação ficará disponível na porta 8080 (localhost:8080).
+
+## Para parar o container:
+docker-compose down
+
+
+## 🌿 Fluxo de Branches
+main → versão estável (entregas finais)
+develop → integração das features
+feature/* → novas funcionalidades
+hotfix/* → correções rápidas
+
+Exemplo de criação de branch:
+git checkout -b feature/cadastro-usuario
+
+## 🔄 Contribuindo
+Criar uma branch para sua tarefa.
+Commitar mudanças.
+Abrir um Pull Request (PR) para develop.
+Outro colega revisa e aprova.
+Quando estável, merge para main.
