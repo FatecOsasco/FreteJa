@@ -10,6 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.freteja.model.User;
 import com.freteja.repository.UserRepository;
+import com.freteja.security.SecurityConfig;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
