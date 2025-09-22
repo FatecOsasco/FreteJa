@@ -31,17 +31,18 @@ public class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(
-                "/",                    // libera home
-                "/auth/**",             // login / registro
-                "/swagger-ui.html",     // Swagger UI
-                "/swagger-ui/**",       // recursos Swagger
-                "/v3/api-docs",         // docs principal (JSON)
-                "/v3/api-docs/**",      // docs adicionais
-                "/swagger-resources/**",
-                "/webjars/**"
-            ).permitAll()
-            .anyRequest().authenticated())
+          .requestMatchers(
+              "/",
+              "/auth/**",
+              "/swagger-ui.html",
+              "/swagger-ui/**",
+              "/v3/api-docs",
+              "/v3/api-docs/**",
+              "/v3/api-docs.yaml",
+              "/swagger-resources/**",
+              "/webjars/**"
+          ).permitAll()
+          .anyRequest().authenticated())
         .addFilterBefore(new JwtAuthFilter(jwt, users),
             org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
     return http.build();
