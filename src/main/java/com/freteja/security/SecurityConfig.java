@@ -32,13 +32,14 @@ public class SecurityConfig {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
-                "/",                     // libera a home
-                "/auth/**",              // login/register
-                "/swagger-ui.html",      // Swagger UI
-                "/swagger-ui/**",        // recursos do Swagger UI
-                "/v3/api-docs/**",       // OpenAPI docs
-                "/swagger-resources/**", // recursos auxiliares Swagger
-                "/webjars/**"            // dependências estáticas
+              "/",                     // libera a home
+              "/auth/**",              // login/register
+              "/swagger-ui.html",      // Swagger UI
+              "/swagger-ui/**",        // recursos do Swagger UI
+              "/v3/api-docs",
+              "/v3/api-docs/**",       // OpenAPI docs
+              "/swagger-resources/**", // recursos auxiliares Swagger
+              "/webjars/**"            // dependências estáticas
             ).permitAll()
             .anyRequest().authenticated())
         .addFilterBefore(new JwtAuthFilter(jwt, users),
