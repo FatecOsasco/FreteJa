@@ -7,6 +7,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Data;
+
+@Data
 @Document("users")
 public class User {
   @Id
@@ -20,12 +23,6 @@ public class User {
   private Set<Perfil> perfis;
   private boolean ativo = true;
 
-  // Para TTL de 90 dias (Demandante/Transportadora), controlado via índice parcial
-  @Indexed // índice TTL criado via configuração programática com partialFilter
   private Instant lastLoginAt;
-
   private Instant createdAt = Instant.now();
-
-  // getters/setters ...
 }
-
