@@ -12,6 +12,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.List;
+
+
 import com.freteja.repository.UserRepository;
 
 @Configuration
@@ -28,8 +34,10 @@ public class SecurityConfig {
   }
 
  @Bean
-SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
-    http.csrf(csrf -> csrf.disable())
+SecurityFilterChain filterChain(HttpSecurity http
+        .cors(), JwtUtil jwt, UserRepository users) throws Exception {
+    http
+        .cors().csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
           .requestMatchers(
               "/",
@@ -47,7 +55,20 @@ SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository u
           .anyRequest().authenticated())
         .addFilterBefore(new JwtAuthFilter(jwt, users),
             org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
-    return http.build();
+    return http
+        .cors().build();
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of(System.getenv().getOrDefault("CORS_ALLOWED_ORIGINS", "*")));
+    config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true);
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+  }
+
 }
 
 
@@ -59,4 +80,16 @@ SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository u
           .collect(Collectors.toSet());
     }
   }
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of(System.getenv().getOrDefault("CORS_ALLOWED_ORIGINS", "*")));
+    config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true);
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+  }
+
 }

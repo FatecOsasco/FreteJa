@@ -2,6 +2,11 @@
 package com.freteja.service;
 
 import com.freteja.model.Cotacao;
+import com.freteja.dto.CotacaoCreateDTO;
+import com.freteja.dto.PropostaCreateDTO;
+import com.freteja.model.User;
+import com.freteja.repository.UserRepository;
+import java.time.Instant;
 import com.freteja.model.Proposta;
 import com.freteja.repository.CotacaoRepository;
 import com.freteja.repository.PropostaRepository;
@@ -12,8 +17,16 @@ import java.util.List;
 @Service
 public class CotacaoService {
 
+    private final UserRepository users;
+
     private final CotacaoRepository cotacoes;
     private final PropostaRepository propostas;
+
+    public CotacaoService(CotacaoRepository cotacoes, PropostaRepository propostas, UserRepository users) {
+        this.cotacoes = cotacoes;
+        this.propostas = propostas;
+        this.users = users;
+    }
     private final ViaCepService viaCep; // já criamos antes
 
     public CotacaoService(CotacaoRepository cotacoes, PropostaRepository propostas, ViaCepService viaCep) {

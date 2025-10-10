@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.freteja.model.Cotacao;
+import com.freteja.dto.CotacaoCreateDTO;
+import com.freteja.dto.PropostaCreateDTO;
+import jakarta.validation.Valid;
 import com.freteja.model.Proposta;
 import com.freteja.repository.UserRepository;
 import com.freteja.service.CotacaoService;
