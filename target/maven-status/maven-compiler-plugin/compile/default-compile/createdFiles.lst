@@ -4,6 +4,7 @@ com/freteja/security/SecurityConfig.class
 com/freteja/controller/PageController.class
 com/freteja/model/Perfil.class
 com/freteja/security/LoginRequest.class
+com/freteja/dto/CotacaoCreateDTO.class
 com/freteja/repository/CotacaoRepository.class
 com/freteja/FreteJaApplication.class
 com/freteja/repository/UserRepository.class
@@ -15,7 +16,9 @@ com/freteja/repository/PropostaRepository.class
 com/freteja/model/Proposta.class
 com/freteja/controller/TokenResponse.class
 com/freteja/controller/RegisterRequest.class
+com/freteja/web/GlobalExceptionHandler.class
 com/freteja/controller/ViaCepController.class
+com/freteja/dto/PropostaCreateDTO.class
 com/freteja/service/UserService.class
 com/freteja/service/ViaCepService.class
 com/freteja/controller/CotacaoController.class

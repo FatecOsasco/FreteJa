@@ -1,5 +1,6 @@
 package com.freteja.security;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,75 +12,54 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.List;
-
-
-import com.freteja.repository.UserRepository;
 
 @Configuration
 public class SecurityConfig {
 
+  private final JwtAuthFilter jwtAuthFilter;
+
+  public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+    this.jwtAuthFilter = jwtAuthFilter;
+  }
+
   @Bean
-  BCryptPasswordEncoder passwordEncoder() {
+  public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
   @Bean
-  AuthenticationManager authenticationManager(AuthenticationConfiguration cfg) throws Exception {
-    return cfg.getAuthenticationManager();
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
   }
 
- @Bean
-SecurityFilterChain filterChain(HttpSecurity http
-        .cors(), JwtUtil jwt, UserRepository users) throws Exception {
-    http
-        .cors().csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-          .requestMatchers(
-              "/",
-              "/auth/**",	      
-              "/cep/**", 
-      	      "/teste-cep",       
-              "/swagger-ui.html",
-              "/swagger-ui/**",
-              "/v3/api-docs",
-              "/v3/api-docs/**",
-              "/v3/api-docs.yaml",
-              "/swagger-resources/**",
-              "/webjars/**"
-          ).permitAll()
-          .anyRequest().authenticated())
-        .addFilterBefore(new JwtAuthFilter(jwt, users),
-            org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
-    return http
-        .cors().build();
   @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(List.of(System.getenv().getOrDefault("CORS_ALLOWED_ORIGINS", "*")));
-    config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
-    config.setAllowedHeaders(List.of("*"));
-    config.setAllowCredentials(true);
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
-    return source;
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+      .csrf(csrf -> csrf.disable())
+      .cors(cors -> {})
+      .authorizeHttpRequests(auth -> auth
+          .requestMatchers("/auth/**", "/via-cep/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+          .anyRequest().authenticated()
+      )
+      .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
   }
-
-}
-
 
   // utilitário para converter perfis em authorities
   public static class SecurityUtils {
     public static Set<SimpleGrantedAuthority> toAuthorities(Set<com.freteja.model.Perfil> perfis) {
+      if (perfis == null) return Set.of();
       return perfis.stream()
           .map(p -> new SimpleGrantedAuthority("ROLE_" + p.name()))
           .collect(Collectors.toSet());
     }
   }
+
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
@@ -91,5 +71,4 @@ SecurityFilterChain filterChain(HttpSecurity http
     source.registerCorsConfiguration("/**", config);
     return source;
   }
-
 }

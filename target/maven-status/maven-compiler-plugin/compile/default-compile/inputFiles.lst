@@ -3,6 +3,8 @@
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/CotacaoController.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/PageController.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/ViaCepController.java
+/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/dto/CotacaoCreateDTO.java
+/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/dto/PropostaCreateDTO.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/dto/ViaCepResponse.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/model/Cotacao.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/model/Perfil.java
@@ -18,3 +20,4 @@
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/service/CotacaoService.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/service/UserService.java
 /home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/service/ViaCepService.java
+/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/web/GlobalExceptionHandler.java
