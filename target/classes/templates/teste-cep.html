@@ -29,7 +29,7 @@
 	    }
 
 	    try {
-	      let response = await fetch(https://viacep.com.br/ws/${cep}/json/);
+	      let response = await fetch('https://viacep.com.br/ws/${cep}/json/');
 	      let data = await response.json();
 
 	      if (data.erro) {

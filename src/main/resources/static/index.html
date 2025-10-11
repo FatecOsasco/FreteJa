@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Home - Sistema</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <div class="container">
+         <header class="header">
+            <div>
+               <h1>Sistema</h1>
+               <div class="small">Home - Frete Já</div>
+            </div>
+            <div>
+               <a href="login.html">Entrar</a>
+               <a href="cadastro.html">Cadastrar</a>
+            </div>
+         </header>
+
+         <section class="card">
+            <h2 id="saudacao">Bem-vindo!</h2>
+            <p>
+               Este sistema demonstra uma home, login, cadastro e dashboard. O back-end em
+               Java deve tratar os envios de formulário e autenticação.
+            </p>
+         </section>
+      </div>
+
+      <script>
+         const horas = new Date().getHours();
+         let mensagem = "Bem-vindo!";
+         if (horas < 12) mensagem = "Bom dia!";
+         else if (horas < 18) mensagem = "Boa tarde!";
+         else mensagem = "Boa noite!";
+         document.getElementById("saudacao").textContent = mensagem;
+      </script>
+   </body>
+</html>

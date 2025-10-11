@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Cadastro</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <div class="container">
+         <header class="header">
+            <h1>Cadastro</h1>
+            <a href="index.html">Home</a>
+         </header>
+
+         <section class="card">
+            <form id="regForm">
+               <label
+                  >Usuário
+                  <input type="text" name="username" required />
+               </label>
+               <label
+                  >Senha
+                  <input type="password" name="password" required />
+               </label>
+               <label
+                  >Confirmar Senha
+                  <input type="password" name="passwordConfirm" required />
+               </label>
+               <label
+                  >Perfil
+                  <select name="role">
+                     <option value="client">Cliente</option>
+                     <option value="company">Empresa</option>
+                  </select>
+               </label>
+               <div id="companyFields" style="display: none">
+                  <label
+                     >Nome da Empresa
+                     <input type="text" name="companyName" />
+                  </label>
+                  <label
+                     >CNPJ / RNTRC
+                     <input type="text" name="companyId" />
+                  </label>
+               </div>
+               <button type="submit">Cadastrar</button>
+            </form>
+         </section>
+      </div>
+
+      <script>
+         const form = document.getElementById("regForm");
+         const roleSel = form.role;
+         const companyFields = document.getElementById("companyFields");
+
+         roleSel.addEventListener("change", () => {
+            companyFields.style.display = roleSel.value === "company" ? "block" : "none";
+         });
+
+         form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const u = form.username.value.trim();
+            const p = form.password.value;
+            const p2 = form.passwordConfirm.value;
+            if (p !== p2) return alert("As senhas não coincidem.");
+            if (p.length < 4) return alert("Senha muito curta.");
+            localStorage.setItem("user", u);
+            alert("Cadastro realizado!");
+            window.location = "dashboard.html";
+         });
+      </script>
+   </body>
+</html>

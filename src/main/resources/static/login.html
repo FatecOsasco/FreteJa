@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Login</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <div class="container">
+         <header class="header">
+            <h1>Login</h1>
+            <a href="index.html">Home</a>
+         </header>
+
+         <section class="card">
+            <form id="loginForm">
+               <label>
+                  Usuário
+                  <input type="text" name="username" required />
+               </label>
+               <label
+                  >Senha
+                  <input type="password" name="password" required />
+               </label>
+               <button type="submit">Entrar</button>
+            </form>
+            <p class="small">Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+         </section>
+      </div>
+
+      <script>
+         const form = document.getElementById("loginForm");
+         form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const u = form.username.value.trim();
+            const p = form.password.value.trim();
+
+            if (!u || !p) return alert("Preencha todos os campos.");
+
+            // simulação de login
+            if (u === "teste" && p === "1234") {
+               localStorage.setItem("user", u);
+               alert("Login bem-sucedido!");
+               window.location = "dashboard.html";
+            } else {
+               alert("Usuário ou senha incorretos.");
+            }
+         });
+      </script>
+   </body>
+</html>
