@@ -40,8 +40,8 @@ Evita rebuild de imagem a cada mudança.
    export CORS_ALLOWED_ORIGINS="http://localhost"
    ```
 4. **Rodar a aplicação**
-   ```
-   bashmvn spring-boot:run -Dspring-boot.run.arguments="--server.port=0" 
+   ```bash
+   mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=0" 
    ```
 5. **Parar o Mongo**
    ```bash
