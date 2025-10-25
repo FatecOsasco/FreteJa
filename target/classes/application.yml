@@ -12,11 +12,10 @@ spring:
 app:
   jwt:
     secret: ${JWT_SECRET:10ba8e962ee223ad654fe1a1ceb6c575b2dc47be767855369714902438c02a80341abed20748865785c9e8e936363adf6236e64931e271420985c668bfb1a11b}
-    expiration: ${JWT_EXPIRATION_MS:86400000} # 24h em ms
+    expiration: ${JWT_EXPIRATION_MS:86400000}
 
 springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
     path: /swagger
-
