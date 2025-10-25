@@ -20,44 +20,8 @@ Aplicação web desenvolvida para a disciplina **Desenvolvimento Web III**, com 
 
 ## ⚙️ Como desenvolver o projeto
 
-### Opção A — Fluxo de DEV (Mongo no Docker, app no Maven)
-Durante o desenvolvimento, apenas o **MongoDB** roda no Docker e a aplicação roda via Maven.  
-Evita rebuild de imagem a cada mudança.
-
-1. **Clonar**
-   ```bash
-   git clone https://github.com/freteja/freteja.git
-   cd freteja
-   ```
-2. **Subir somente o Mongo**
-   ```bash
-   docker compose up -d mongo
-   ```
-3. **Exportar variáveis**
-   ```bash
-   export MONGODB_URI="mongodb://localhost:27017/freteja"
-   export JWT_SECRET="<chave do projeto - pedir pro Giovanni>"
-   export CORS_ALLOWED_ORIGINS="http://localhost"
-   ```
-4. **Rodar a aplicação**
-   ```bash
-   mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=0" 
-   ```
-5. **Parar o Mongo**
-   ```bash
-   docker compose down
-   ```
-
-### Opção B — Tudo com Docker Compose (api + mongo)
-1. **.env** (na raiz):
-   ```
-   SERVER_PORT=8080
-   MONGODB_URI=mongodb://mongo:27017/freteja
-   CORS_ALLOWED_ORIGINS=http://localhost
-   JWT_SECRET=<chave do projeto - pedir pro Giovanni>
-   JWT_EXPIRATION_MS=86400000
-   ```
-2. **Subir**
+### Docker Compose (api + mongo)
+1. **Digite no terminal**
    ```bash
    docker compose up -d --build
    docker compose ps
