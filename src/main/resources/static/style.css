@@ -1,0 +1,172 @@
+:root {
+   --primary: #0078d7;
+   --primary-dark: #005a9e;
+   --bg: #f3f3f3;
+   --surface: #ffffff;
+   --text: #323130;
+   --muted: #666;
+   --radius: 8px;
+   --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+* {
+   box-sizing: border-box;
+}
+
+body {
+   margin: 0;
+   font-family: "Segoe UI", Arial, sans-serif;
+   background: var(--bg);
+   color: var(--text);
+}
+
+/* Container principal */
+.container {
+   max-width: 960px;
+   margin: 0 auto;
+   padding: 20px;
+}
+
+/* Header */
+.header {
+   background: var(--surface);
+   padding: 15px 20px;
+   border-radius: var(--radius);
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   box-shadow: var(--shadow);
+}
+
+.header a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 600;
+   margin-left: 10px;
+}
+
+/* Cards */
+.card {
+   background: var(--surface);
+   padding: 20px;
+   border-radius: var(--radius);
+   box-shadow: var(--shadow);
+   margin-top: 20px;
+}
+
+.card h2,
+.card h3 {
+   margin-top: 0;
+}
+
+/* Formulários */
+form {
+   display: grid;
+   gap: 12px;
+}
+
+label {
+   font-size: 14px;
+   color: var(--muted);
+}
+
+input,
+select {
+   padding: 10px;
+   border-radius: var(--radius);
+   border: 1px solid #ddd;
+   font-size: 14px;
+}
+
+button,
+.btn {
+   background: var(--primary);
+   color: #fff;
+   border: none;
+   padding: 10px 14px;
+   border-radius: var(--radius);
+   cursor: pointer;
+   font-weight: 600;
+   transition: background 0.2s;
+}
+
+button:hover,
+.btn:hover {
+   background: var(--primary-dark);
+}
+
+.small {
+   font-size: 13px;
+   color: var(--muted);
+}
+
+/* Layout dashboard */
+.wrapper {
+   display: flex;
+   min-height: 100vh;
+}
+
+.sidebar {
+   background: var(--primary);
+   color: #fff;
+   width: 220px;
+   flex-shrink: 0;
+   display: flex;
+   flex-direction: column;
+}
+
+.sidebar h1 {
+   font-size: 20px;
+   padding: 20px;
+   margin: 0;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav {
+   display: flex;
+   flex-direction: column;
+}
+.sidebar nav a {
+   padding: 12px 20px;
+   color: #fff;
+   text-decoration: none;
+   transition: background 0.2s;
+}
+.sidebar nav a:hover {
+   background: rgba(255, 255, 255, 0.15);
+}
+
+.content {
+   flex: 1;
+   padding: 30px;
+}
+
+.cards {
+   display: grid;
+   gap: 20px;
+   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+   transition: 0.2s;
+}
+
+@media (max-width: 768px) {
+   .wrapper {
+      flex-direction: column;
+   }
+   .sidebar {
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+   }
+   .sidebar nav {
+      flex-direction: row;
+   }
+   .sidebar nav a {
+      flex: 1;
+      text-align: center;
+   }
+}

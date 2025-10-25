@@ -1,20 +1,23 @@
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/FreteJaApplication.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/AuthController.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/CotacaoController.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/PageController.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/controller/ViaCepController.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/dto/ViaCepResponse.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/model/Cotacao.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/model/Perfil.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/model/Proposta.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/model/User.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/repository/CotacaoRepository.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/repository/PropostaRepository.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/repository/UserRepository.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/security/JwtAuthFilter.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/security/JwtUtil.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/security/LoginRequest.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/security/SecurityConfig.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/service/CotacaoService.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/service/UserService.java
-/home/giovanni/Downloads/07. ISW030 - Desenvolvimento Web III/FreteJa/src/main/java/com/freteja/service/ViaCepService.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\controller\AuthController.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\controller\CotacaoController.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\controller\PageController.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\controller\ViaCepController.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\dto\CotacaoCreateDTO.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\dto\PropostaCreateDTO.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\dto\ViaCepResponse.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\FreteJaApplication.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\model\Cotacao.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\model\Perfil.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\model\Proposta.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\model\User.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\repository\CotacaoRepository.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\repository\PropostaRepository.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\repository\UserRepository.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\security\JwtAuthFilter.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\security\JwtUtil.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\security\LoginRequest.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\security\SecurityConfig.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\service\CotacaoService.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\service\UserService.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\service\ViaCepService.java
+C:\Users\Igu\freteja\src\main\java\com\freteja\web\GlobalExceptionHandler.java

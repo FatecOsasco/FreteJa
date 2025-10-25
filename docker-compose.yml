@@ -1,43 +1,52 @@
 services:
   mongo:
-    image: mongo:7
-    container_name: freteja-mongo
+    image: mongo:6
+    # remova container_name para evitar conflitos de nome
+    # container_name: freteja-mongo
     restart: unless-stopped
+    command: ["--bind_ip_all"]
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_DATABASE: freteja
     volumes:
       - mongo_data:/data/db
+    # REMOVER o healthcheck
+    # healthcheck:
+    #   test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
 
   api:
     build: .
-    container_name: freteja-api
-    restart: unless-stopped
+    # remova container_name para evitar conflitos
+    # container_name: freteja-api
     depends_on:
-      - mongo
+      # mudar para "service_started", já que não há healthcheck
+      mongo:
+        condition: service_started
     environment:
-      SERVER_PORT: 8080
-      MONGODB_URI: mongodb://mongo:27017/freteja
-      JWT_SECRET: change-me-super-secret
-      JWT_EXPIRATION_MS: 86400000
-      JAVA_OPTS: "-Xms256m -Xmx512m"
+      SERVER_PORT: ${SERVER_PORT}
+      MONGODB_URI: ${MONGODB_URI}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS}
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT}:8080"
+    restart: unless-stopped
 
-  # Opcional para ver o banco em UI web
   mongo-express:
-    image: mongo-express:1.0.2
-    container_name: freteja-mongo-express
+    image: mongo-express:1
+    # container_name: freteja-me
     depends_on:
-      - mongo
+      mongo:
+        condition: service_started
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin
     ports:
       - "8081:8081"
+    restart: unless-stopped
 
 volumes:
   mongo_data:
-

@@ -5,35 +5,50 @@
   <title>Teste CEP - Frete Já</title>
 </head>
 <body>
-  <h2>Consulta CEP</h2>
+	<h2>Consultar CEP</h2>
 
-  <form onsubmit="consultarCep(event)">
-    <label>CEP: <input type="text" id="cep" value="01001000"></label>
-    <button type="submit">Consultar</button>
-  </form>
+	<form onsubmit="consultarCep(event)">
+	  <label>CEP: <input type="text" id="cep" value="01001000"></label><br><br>
+	  <label>Rua: <input type="text" id="logradouro"></label><br><br>
+	  <label>Complemento: <input type="text" id="complemento"></label><br><br>
+	  <label>Bairro: <input type="text" id="bairro"></label><br><br>
+	  <label>Cidade: <input type="text" id="localidade"></label><br><br>
+	  <label>Estado: <input type="text" id="uf"></label><br><br>
+	  <button type="submit">Consultar</button>
+	</form>
 
-  <pre id="resultado"></pre>
+	<script>
+	  async function consultarCep(event) {
+	    event.preventDefault(); // não recarrega a página
 
-  <script>
-    async function consultarCep(event) {
-      event.preventDefault(); // evita recarregar a página
+	    let cep = document.getElementById("cep").value.replace(/\D/g, ""); // remove caracteres não numéricos
 
-      const cep = document.getElementById("cep").value;
-      const resultado = document.getElementById("resultado");
+	    if (cep.length !== 8) {
+	      alert("Digite um CEP válido com 8 dígitos.");
+	      return;
+	    }
 
-      try {
-        const res = await fetch("http://localhost:8080/cep/" + cep);
-        if (!res.ok) {
-          resultado.textContent = "Erro: " + res.status;
-          return;
-        }
-        const data = await res.json();
-        resultado.textContent = JSON.stringify(data, null, 2);
-      } catch (err) {
-        resultado.textContent = "Erro de conexão: " + err.message;
-      }
-    }
-  </script>
+	    try {
+	      let response = await fetch('https://viacep.com.br/ws/${cep}/json/');
+	      let data = await response.json();
+
+	      if (data.erro) {
+	        alert("CEP não encontrado!");
+	        return;
+	      }
+
+	      // Preenche os campos do formulário
+	      document.getElementById("logradouro").value = data.logradouro || "";
+	      document.getElementById("complemento").value = data.complemento || "";
+	      document.getElementById("bairro").value = data.bairro || "";
+	      document.getElementById("localidade").value = data.localidade || "";
+	      document.getElementById("uf").value = data.uf || "";
+
+	    } catch (error) {
+	      alert("Erro ao consultar CEP!");
+	      console.error(error);
+	    }
+	  }
+	</script>
 </body>
 </html>
-

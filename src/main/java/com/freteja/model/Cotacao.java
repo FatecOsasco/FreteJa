@@ -10,16 +10,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-
 @Document("cotacoes")
 public class Cotacao {
   @Id
   private String id;
 
   private String solicitanteUserId;
+
   private String origemCep;
   private String destinoCep;
 
+  private Integer quantidade;
   private BigDecimal pesoKg;
   private String dimensoes; // ex.: "30x20x15"
 
@@ -31,7 +32,4 @@ public class Cotacao {
   // TTL histórico 5 anos para aprovadas/reprovadas (índice TTL parcial)
   @Indexed
   private Instant encerradaEm; // setado quando aprova/reprova
-
-  // getters/setters ...
 }
-

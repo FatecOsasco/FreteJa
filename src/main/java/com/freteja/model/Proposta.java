@@ -5,6 +5,7 @@ import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Data;
 
 @Data
@@ -17,11 +18,8 @@ public class Proposta {
   private String transportadoraUserId;
 
   private BigDecimal valor;
-  private Integer prazoDias;
-  private String observacao;
+  private String prazoEntregaDias;
+  private String observacoes;
 
   private Instant createdAt = Instant.now();
-
-  // getters/setters ...
 }
-

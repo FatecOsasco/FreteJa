@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.freteja.model.Cotacao;
+import com.freteja.dto.CotacaoCreateDTO;
+import com.freteja.dto.PropostaCreateDTO;
+import jakarta.validation.Valid;
 import com.freteja.model.Proposta;
 import com.freteja.repository.UserRepository;
 import com.freteja.service.CotacaoService;
@@ -23,11 +26,11 @@ public class CotacaoController {
     this.users = users;
   }
 
-  @PostMapping
-  public ResponseEntity<Cotacao> criar(@RequestBody Cotacao c, Principal principal) {
-    var user = users.findByEmail(principal.getName()).orElseThrow();
-    return ResponseEntity.ok(service.criar(c, user.getId()));
+  @PostMapping()
+  public ResponseEntity<Cotacao> criar(@Valid @RequestBody CotacaoCreateDTO req, Principal principal) {
+    return ResponseEntity.ok(service.criar(principal.getName(), req));
   }
+
 
   @GetMapping("/minhas")
   public ResponseEntity<List<Cotacao>> minhas(Principal principal) {
@@ -36,10 +39,8 @@ public class CotacaoController {
   }
 
   @PostMapping("/{id}/propostas")
-  public ResponseEntity<Proposta> propor(@PathVariable String id, @RequestBody Proposta p, Principal principal) {
-    var user = users.findByEmail(principal.getName()).orElseThrow();
-    p.setCotacaoId(id);
-    return ResponseEntity.ok(service.propor(p, user.getId()));
+  public ResponseEntity<Proposta> adicionarProposta(@PathVariable String id, @Valid @RequestBody PropostaCreateDTO req, Principal principal) {
+    return ResponseEntity.ok(service.adicionarProposta(id, principal.getName(), req));
   }
 
   @PostMapping("/{id}/aprovar/{propostaId}")

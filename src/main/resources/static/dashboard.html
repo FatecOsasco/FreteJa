@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Dashboard</title>
+      <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+      <div class="wrapper">
+         <aside class="sidebar">
+            <h1>Sistema</h1>
+            <nav>
+               <a href="dashboard.html">Dashboard</a>
+               <a href="index.html">Home</a>
+               <a href="#" id="logoutBtn">Sair</a>
+            </nav>
+         </aside>
+
+         <main class="content">
+            <h2 id="welcome">Olá!</h2>
+            <section class="cards">
+               <div class="card">
+                  <h3>Resumo</h3>
+                  <p>Você está logado no sistema. Esta é a área restrita.</p>
+               </div>
+               <div class="card">
+                  <h3>Cotações</h3>
+                  <p>Nenhuma cotação solicitada no momento.</p>
+               </div>
+            </section>
+         </main>
+      </div>
+
+      <script>
+         const user = localStorage.getItem("user");
+         if (!user) {
+            alert("Faça login primeiro.");
+            window.location = "login.html";
+         } else {
+            document.getElementById("welcome").textContent = `Bem-vindo, ${user}!`;
+         }
+
+         document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("user");
+            alert("Você saiu.");
+            window.location = "login.html";
+         });
+      </script>
+   </body>
+</html>
