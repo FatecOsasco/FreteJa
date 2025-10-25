@@ -3,70 +3,63 @@
 Aplicação web desenvolvida para a disciplina **Desenvolvimento Web III**, com objetivo de permitir cotações de frete entre empresas demandantes e transportadoras.
 
 ## 👥 Equipe
-- **Giovanni Carneiro Nunes**
-- **Gustavo Henrique Barbosa Almeida**
-- **Igor Alves Baptistella**
-- **Michael Teixeira da Costa**
+- **Giovanni**
+- **Gustavo Henrique**
+- **Igor**
+- **Michael**
 
 ## 🏗️ Tecnologias
 - **Backend:** Java 21, Spring Boot (Web, Security, Data MongoDB)
 - **Frontend:** TBD
-- **Banco de Dados:** MongoDB 6
+- **Banco de Dados:** MongoDB
 - **Infra:** Docker + Docker Compose
-- **Segurança:** JWT (HS256/HS512), BCrypt, HTTPS *(via proxy/Nginx em produção)*
+- **Segurança:** JWT (HS256/HS512), BCrypt, HTTPS *(proxy/Nginx em produção)*
 - **DevOps:** GitHub, Maven, Swagger/OpenAPI
-
 ---
 
-## ⚙️ Como desenvolver o projeto
+## ⚙️ Como acessar o projeto
 
 ### Docker Compose (api + mongo)
 1. **Digite no terminal**
    ```bash
+   docker compose down
    docker compose up -d --build
    docker compose ps
    docker compose logs -f api
    ```
-3. **Acessos**
-   - API: `http://localhost:8080`
-   - Mongo Express (opcional): `http://localhost:8081`
-
+2. **Busque no Google**
+   ```
+   localhost:8080
+   ```
 ---
 
 ## 🌿 Fluxo de Branches
 
 - `main` → versão estável (entregas finais)  
-- `develop` → integração das features  
-- `feature/*` → novas funcionalidades  
-- `hotfix/*` → correções rápidas  
+- `sprint-x` → versão a cada sprint  
 
-Exemplo:
+Mudar de Branch:
 ```bash
-git checkout -b feature/cadastro-usuario
+git checkout sprint-x
 ```
 
 ## 🔄 Contribuindo
-
-1. Criar uma branch para sua tarefa.  
-2. Commitar mudanças com mensagens claras.  
-3. Abrir um Pull Request (PR) para `develop`.  
-4. Revisão por outro membro da equipe.  
-5. Quando estável, merge para `main`.
+ 
+1. Commitar mudanças com mensagens claras
+2. Push para a branch `sprint-x`
 
 ---
 
-## 🛠️ Troubleshooting
+## 🛠️ Troubleshooting (concertar error)
 
-- **Erro JWT curto (400)**: gere `JWT_SECRET` com **32+ caracteres** e reinicie.
 - **Porta 8080 ocupada**: troque `SERVER_PORT` no `.env` (ex.: `8082`) ou finalize o processo.
-- **`UnknownHost mongo` fora do Compose**: use `MONGODB_URI=mongodb://localhost:27017/freteja`.
-- **CORS no navegador**: a origem do front deve ser **exatamente** a informada.
-- **Seeds não aparecem**: os seeds rodam apenas se `users.count()==0`.  
-  Para resemear, apague a coleção `users` e reinicie a aplicação.
+- **Erro 403**: em andamento.
 
 ---
 
 ## 🧭 Visão Geral (estado atual do backend)
+
+Arquitetura Control-Service-Repository:
 
 - Autenticação **JWT** com `JwtAuthFilter`.
 - Autorização por **perfis**: `ADMIN`, `DEMANDANTE`, `TRANSPORTADORA`.
@@ -78,24 +71,11 @@ git checkout -b feature/cadastro-usuario
 - **Docker/Compose** para `api` + `mongo` (+ opcional `mongo-express`).
 - **Swagger/OpenAPI** pronto para ativar.
 
-**Estrutura essencial**
-```
-src/main/java/com/freteja/
-  controller/    # AuthController, CotacaoController
-  service/       # UserService, CotacaoService
-  repository/    # UserRepository, CotacaoRepository, PropostaRepository
-  security/      # JwtUtil, JwtAuthFilter, SecurityConfig
-  model/         # User, Perfil, Cotacao, Proposta
-  dto/           # LoginRequest, CotacaoCreateDTO, PropostaCreateDTO...
-  advice/        # GlobalExceptionHandler
-FreteJaApplication.java  # CommandLineRunner: índices + seeds
-```
-
 ---
 
 ## 🔐 Autenticação, Perfis e Seeds
 
-**Seeds** (criados se `users` estiver vazia):
+**Seeds**:
 
 | Perfil           | E-mail                       | Senha          |
 |------------------|------------------------------|----------------|
@@ -159,20 +139,6 @@ curl -s -X POST "http://localhost:8080/cotacoes/<ID>/aprovar?propostaId=<ID_PROP
 # Reprovar
 curl -s -X POST "http://localhost:8080/cotacoes/<ID>/reprovar"   -H "Authorization: Bearer $TOKEN"
 ```
-
 ---
-
-## 🧪 Testes & Build
-
-- Build rápido:
-  ```bash
-  mvn -DskipTests clean package
-  ```
-- Rodar local (porta alternativa):
-  ```bash
-  SERVER_PORT=8082 MONGODB_URI="mongodb://localhost:27017/freteja"   JWT_SECRET="<já sabe rs>" CORS_ALLOWED_ORIGINS="http://localhost"   mvn -DskipTests spring-boot:run
-  ```
-
-> Observação: o seed roda no startup padrão. Para `mvn test` sem Mongo real, recomenda-se futuramente isolar com `@Profile("!test")` no `CommandLineRunner` ou `@ConditionalOnProperty`.
 
 ---
