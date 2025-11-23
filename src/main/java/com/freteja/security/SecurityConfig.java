@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,8 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import com.freteja.repository.UserRepository;
 
 @Configuration
 public class SecurityConfig {
@@ -40,16 +39,22 @@ public class SecurityConfig {
   }
 
   @Bean
-  SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwt, UserRepository users) throws Exception {
-  http.csrf(csrf -> csrf.disable())
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+      .csrf(csrf -> csrf.disable())
+      .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+      .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(auth -> auth
-        // libera css/js/img/favicon/webjars… (pontos comuns)
+        // estáticos (se tiver)
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-        // libera a raiz e htmls simples
-        .requestMatchers("/", "/index.html", "/**/*.html").permitAll()
-        // suas rotas públicas (auth, swagger, etc)
+
+        // raiz / index, se servir algo pelo backend
+        .requestMatchers("/", "/index.html").permitAll()
+
+        // rotas públicas
         .requestMatchers(
           "/auth/**",
+          "/cep/**",
           "/swagger-ui.html",
           "/swagger-ui/**",
           "/v3/api-docs",
@@ -58,14 +63,20 @@ public class SecurityConfig {
           "/swagger-resources/**",
           "/webjars/**"
         ).permitAll()
-        // o restante exige auth
-        .anyRequest().authenticated())
-      .addFilterBefore(new JwtAuthFilter(jwt, users), UsernamePasswordAuthenticationFilter.class);
 
-  return http.build();
-}
+        // 💡 qualquer usuário AUTENTICADO pode acessar /cotacoes/**
+        .requestMatchers("/cotacoes/**").authenticated()
 
-  // utilitário para converter perfis em authorities
+        // qualquer outra coisa também exige estar logado
+        .anyRequest().authenticated()
+      )
+      // usa o filtro JWT que a gente arrumou
+      .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+  }
+
+  // util para converter Perfil -> ROLE_DEMANDANTE / ROLE_TRANSPORTADORA etc.
   public static class SecurityUtils {
     public static Set<SimpleGrantedAuthority> toAuthorities(Set<com.freteja.model.Perfil> perfis) {
       if (perfis == null) return Set.of();
@@ -78,10 +89,14 @@ public class SecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(List.of(System.getenv().getOrDefault("CORS_ALLOWED_ORIGINS", "*")));
+    config.setAllowedOrigins(List.of(
+      "http://localhost:5173",
+      "http://127.0.0.1:5173"
+    ));
     config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
     config.setAllowedHeaders(List.of("*"));
     config.setAllowCredentials(true);
+
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", config);
     return source;

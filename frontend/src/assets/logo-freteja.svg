@@ -1,0 +1,14 @@
+<svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-main" x1="0" y1="0" x2="180" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EA7500"/>
+      <stop offset="0.4" stop-color="#EAA957"/>
+      <stop offset="1" stop-color="#3440B2"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="4" width="52" height="32" rx="16" fill="url(#grad-main)"/>
+  <path d="M12 24L18 14L24 24H12Z" fill="#FFFFFF" opacity="0.95"/>
+  <path d="M22 24L26 18L30 24H22Z" fill="#5CE5D8" opacity="0.98"/>
+  <text x="64" y="24" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#111827">Frete</text>
+  <text x="118" y="24" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#3440B2">Já</text>
+</svg>
