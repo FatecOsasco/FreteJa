@@ -40,21 +40,14 @@ public class SecurityConfig {
 
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
+     http
       .csrf(csrf -> csrf.disable())
       .cors(cors -> cors.configurationSource(corsConfigurationSource()))
       .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(auth -> auth
-        // estáticos (se tiver)
-        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-
-        // raiz / index, se servir algo pelo backend
-        .requestMatchers("/", "/index.html").permitAll()
-
-        // rotas públicas
         .requestMatchers(
+	  "/",
           "/auth/**",
-          "/cep/**",
           "/swagger-ui.html",
           "/swagger-ui/**",
           "/v3/api-docs",
@@ -63,20 +56,12 @@ public class SecurityConfig {
           "/swagger-resources/**",
           "/webjars/**"
         ).permitAll()
-
-        // 💡 qualquer usuário AUTENTICADO pode acessar /cotacoes/**
-        .requestMatchers("/cotacoes/**").authenticated()
-
-        // qualquer outra coisa também exige estar logado
-        .anyRequest().authenticated()
-      )
-      // usa o filtro JWT que a gente arrumou
+        .anyRequest().authenticated())
       .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
 
-  // util para converter Perfil -> ROLE_DEMANDANTE / ROLE_TRANSPORTADORA etc.
   public static class SecurityUtils {
     public static Set<SimpleGrantedAuthority> toAuthorities(Set<com.freteja.model.Perfil> perfis) {
       if (perfis == null) return Set.of();
@@ -87,14 +72,14 @@ public class SecurityConfig {
   }
 
   @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
+  CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowedOrigins(List.of(
-      "http://localhost:5173",
-      "http://127.0.0.1:5173"
+      "https://freteja.tec.br",
+      "http://localhost:5173"
     ));
-    config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
-    config.setAllowedHeaders(List.of("*"));
+    config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
     config.setAllowCredentials(true);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -102,3 +87,4 @@ public class SecurityConfig {
     return source;
   }
 }
+

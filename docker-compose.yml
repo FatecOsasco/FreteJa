@@ -1,57 +1,24 @@
+version: "3.9"
+
 services:
   mongo:
-    image: mongo:6
-    # remova container_name para evitar conflitos de nome
-    # container_name: freteja-mongo
+    image: mongo:7
+    container_name: freteja-mongo
     restart: unless-stopped
-    command: ["--bind_ip_all"]
-    ports:
-      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: freteja
     volumes:
       - mongo_data:/data/db
-    # REMOVER o healthcheck
-    # healthcheck:
-    #   test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
-    #   start_period: 20s
-
-  mongo-express:
-    image: mongo-express:1
-    # container_name: freteja-me
-    depends_on:
-      mongo:
-        condition: service_started
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: admin
-    ports:
-      - "8081:8081"
-    restart: unless-stopped
 
   api:
     build: .
+    container_name: freteja-api
+    env_file:
+      - .env
     ports:
       - "8080:8080"
-    environment:
-      - SERVER_PORT=8080
-      - MONGODB_URI=mongodb://mongo:27017/freteja
     depends_on:
-      mongo:
-        condition: service_started
-    restart: unless-stopped
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "5173:5173"
-    environment:
-      - VITE_API_BASE_URL=http://localhost:8080
-    depends_on:
-      api:
-        condition: service_started
+      - mongo
     restart: unless-stopped
 
 volumes:

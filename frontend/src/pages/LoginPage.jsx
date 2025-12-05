@@ -116,8 +116,6 @@ export default function LoginPage() {
           >
             <li>Cadastro de cotações com origem, destino, peso e dimensões</li>
             <li>Envio de propostas com valor, prazo e observações</li>
-            <li>Painel para aprovação/reprovação dentro da aplicação</li>
-            <li>Integração preparada para API de CEP e MongoDB</li>
           </ul>
         </section>
 
@@ -206,9 +204,6 @@ export default function LoginPage() {
                     )
                   })}
                 </div>
-                <p style={{ margin: '0.25rem 0 0', fontSize: '0.72rem', color: '#9CA3AF' }}>
-                  Use DEMANDANTE para registrar pedidos e TRANSPORTADORA para enviar propostas.
-                </p>
               </div>
             )}
 
@@ -256,11 +251,6 @@ export default function LoginPage() {
               {isRegisterMode ? 'Já tenho conta, voltar para login' : 'Quero criar uma conta agora'}
             </button>
 
-            <p style={{ margin: '0.5rem 0 0', fontSize: '0.7rem', color: '#9CA3AF' }}>
-              Este front-end consome a API Spring Boot do projeto <strong>Frete Já</strong>. Certifique-se de que a API
-              está rodando em <code>http://localhost:8080</code> ou ajuste a variável{' '}
-              <code>VITE_API_BASE_URL</code>.
-            </p>
           </form>
         </section>
       </div>
